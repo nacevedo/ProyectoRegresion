@@ -32,7 +32,7 @@ cMulticolinealidad <- lm (VISTAS ~. -ENJ1, data = datos)
 vif(cMulticolinealidad)
 
 #Heterocedasticidad
-plot(cMulticolinealidad)
+#plot(cMulticolinealidad)
 
 library(lmtest)
 
@@ -62,11 +62,21 @@ bptest(VISTAS ~ EXP2, data = datos)
 bptest(VISTAS ~ EXP3, data = datos)
 
 View(datos)
-#datosCorregidos <- datos()/((datos$IM)^(1/2))
+datosCorregidos1 <- datos[,6:24]/sqrt(datos$IM)
+datosCorregidos <- c(datos[,1:5],datosCorregidos1)
 
-#regCorregida <- lm (VISTAS ~. -ENJ1, data = datosCorregidos)
-#bptest(regCorregida)
+regCorregida <- lm (VISTAS ~. -ENJ1 -IM, data = datosCorregidos)
+summary(regCorregida)
+bptest(regCorregida)
 
+
+#Comparación de residuales
+resi<-matrix(residuals(regCorregida))
+resi1<-matrix(c(resi[2:910,],0))
+#Gráfico
+plot(resi,resi1)
+
+dwtest(regCorregida)
 
 
 
