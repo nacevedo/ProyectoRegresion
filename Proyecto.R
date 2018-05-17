@@ -1,23 +1,33 @@
-data <- Wikipedia_Views
-data$GENERO <- factor(data$GENERO)
-data$FACULTAD <- factor(data$FACULTAD)
-data$PhD <- factor(data$PhD)
-data$CARGO <- factor(data$CARGO)
-data$LOGINWIKI <- factor(data$LOGINWIKI)
+datos <- Wikipedia_Views
 
-data$GENERO <- relevel(data$GENERO, ref = "0")
-data$FACULTAD <- relevel(data$FACULTAD, ref = 6)
-data$PhD <- relevel(data$PhD, ref = "0")
-data$CARGO <- relevel(data$CARGO, ref = 6)
-data$LOGINWIKI <- relevel(data$LOGINWIKI, ref = "0")
+datos$GENERO <- as.numeric(datos$GENERO)
+datos$FACULTAD <- as.numeric(datos$FACULTAD)
+datos$PhD <- as.numeric(datos$PhD)
+datos$CARGO <- as.numeric(datos$CARGO)
+datos$LOGINWIKI <- as.numeric(datos$LOGINWIKI)
 
-reg1 = lm(VISTAS ~., data = data)
+datos$GENERO <- factor(datos$GENERO)
+datos$FACULTAD <- factor(datos$FACULTAD)
+datos$PhD <- factor(datos$PhD)
+datos$CARGO <- factor(datos$CARGO)
+datos$LOGINWIKI <- factor(datos$LOGINWIKI)
+
+datos$GENERO <- relevel(datos$GENERO, ref = 1)
+datos$FACULTAD <- relevel(datos$FACULTAD, ref = 6)
+datos$PhD <- relevel(datos$PhD, ref = 1)
+datos$CARGO <- relevel(datos$CARGO, ref = 6)
+datos$LOGINWIKI <- relevel(datos$LOGINWIKI, ref = 1)
+
+reg1 = lm(VISTAS ~., data = datos)
 
 #Multicolinealidad
-pairs(~ VISTAS + EDAD + GENERO + FACULTAD + PhD + EXPERIENCIA + 
-        CARGO +SALARIO +LOGINWIKI+ PEU1 + PEU2 +ENJ1 + ENJ2 +QU+VIS+IM+SA+USE1+USE2+USE3+PF+EXP1+EXP2+EXP3, data = data)
+#pairs(~ VISTAS + EDAD + GENERO + FACULTAD + PhD + EXPERIENCIA + 
+       # CARGO +SALARIO +LOGINWIKI+ PEU1 + PEU2 +ENJ1 + ENJ2 +QU+VIS+IM+SA+USE1+USE2+USE3+PF+EXP1+EXP2+EXP3, datos = datos)
 
 vif(reg1)
 
-matriz <- data.frame(c(data[,1:8]),data[,10:24])
-cor(matriz)
+cMulticolinealidad <- lm (VISTAS ~. -ENJ1, data = datos)
+vif(cMulticolinealidad)
+
+
+
