@@ -78,6 +78,36 @@ plot(resi,resi1)
 
 dwtest(regCorregida)
 
+summary(regCorregida)
+
+#Significancia individual
+linearHypothesis(regCorregida, ("GENERO1 = 0"))
+
+linearHypothesis(regCorregida, c("FACULTAD1 = 0", "FACULTAD2 = 0","FACULTAD3 = 0","FACULTAD4 = 0","FACULTAD5 = 0"))
+
+linearHypothesis(regCorregida, ("PhD1 = 0"))
+
+linearHypothesis(regCorregida, ("LOGINWIKI1 = 0"))
+
+linearHypothesis(regCorregida, c("CARGO1 = 0", "CARGO2 = 0","CARGO3 = 0","CARGO4 = 0","CARGO5 = 0"))
+
+#SIN SIGNIFICATIVAS
+
+linearHypothesis(regCorregida, c("CARGO1 = 0", "CARGO2 = 0","CARGO3 = 0","CARGO4 = 0","CARGO5 = 0","FACULTAD1 = 0", "FACULTAD2 = 0","FACULTAD3 = 0","FACULTAD4 = 0","FACULTAD5 = 0"
+                                 ,"PhD1","LOGINWIKI1 = 0", "VIS = 0", "USE2 = 0", "USE3 = 0", "PF = 0", "EXP3 = 0"))
+
+#REGRESIÓN REDUCIDA
+regReducida <- lm(VISTAS ~. -CARGO - FACULTAD - PhD - LOGINWIKI - VIS - USE2 - USE3 - PF - EXP3, data = datosCorregidos)
+summary(regReducida)
+
+#PRIMERA PETICIÓN
+linearHypothesis(regCorregida, c("CARGO1 = 0", "CARGO2 = 0","CARGO3 = 0","CARGO4 = 0","CARGO5 = 0","FACULTAD1 = 0", "FACULTAD2 = 0","FACULTAD3 = 0","FACULTAD5 = 0"))
+
+#SEGUNDA PETICIÓN
+
+#TERCERA PETICIÓN (QUÉ GÉNERO)
+linearHypothesis(regCorregida, "GENERO1 = 0")
+
 
 
 
