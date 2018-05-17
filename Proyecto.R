@@ -29,5 +29,7 @@ vif(reg1)
 cMulticolinealidad <- lm (VISTAS ~. -ENJ1, data = datos)
 vif(cMulticolinealidad)
 
+#Heterocedasticidad
+plot(cMulticolinealidad)
 
 
