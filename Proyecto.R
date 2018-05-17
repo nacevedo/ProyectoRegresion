@@ -14,5 +14,10 @@ data$LOGINWIKI <- relevel(data$LOGINWIKI, ref = "0")
 reg1 = lm(VISTAS ~., data = data)
 
 #Multicolinealidad
-pairs(~ VISTAS + EDAD + GENERO + FACULTAD + PhD + EXPERIENCIA + CARGO +SALARIO +LOGINWIKI+ PEU1 + PEU2 +ENJ1 + ENJ2 +QU+VIS+IM+SA+USE1+USE2+USE3+PF+EXP1+EXP2+EXP3, data = data)
+pairs(~ VISTAS + EDAD + GENERO + FACULTAD + PhD + EXPERIENCIA + 
+        CARGO +SALARIO +LOGINWIKI+ PEU1 + PEU2 +ENJ1 + ENJ2 +QU+VIS+IM+SA+USE1+USE2+USE3+PF+EXP1+EXP2+EXP3, data = data)
 
+vif(reg1)
+
+matriz <- data.frame(c(data[,1:8]),data[,10:24])
+cor(matriz)
