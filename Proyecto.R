@@ -24,6 +24,8 @@ reg1 = lm(VISTAS ~., data = datos)
 #pairs(~ VISTAS + EDAD + GENERO + FACULTAD + PhD + EXPERIENCIA + 
        # CARGO +SALARIO +LOGINWIKI+ PEU1 + PEU2 +ENJ1 + ENJ2 +QU+VIS+IM+SA+USE1+USE2+USE3+PF+EXP1+EXP2+EXP3, datos = datos)
 
+library(car)
+
 vif(reg1)
 
 cMulticolinealidad <- lm (VISTAS ~. -ENJ1, data = datos)
@@ -31,5 +33,41 @@ vif(cMulticolinealidad)
 
 #Heterocedasticidad
 plot(cMulticolinealidad)
+
+library(lmtest)
+
+bptest(cMulticolinealidad)
+
+bptest(VISTAS ~ EDAD, data = datos)
+bptest(VISTAS ~ GENERO, data = datos)
+bptest(VISTAS ~ FACULTAD, data = datos)
+bptest(VISTAS ~ PhD, data = datos)
+bptest(VISTAS ~ EXPERIENCIA, data = datos)
+bptest(VISTAS ~ CARGO, data = datos)
+bptest(VISTAS ~ SALARIO, data = datos)
+bptest(VISTAS ~ LOGINWIKI, data = datos)
+bptest(VISTAS ~ PEU1, data = datos)
+bptest(VISTAS ~ PEU2, data = datos)
+bptest(VISTAS ~ ENJ2, data = datos)
+bptest(VISTAS ~ QU, data = datos)
+bptest(VISTAS ~ VIS, data = datos)
+bptest(VISTAS ~ IM, data = datos)
+bptest(VISTAS ~ SA, data = datos)
+bptest(VISTAS ~ USE1, data = datos)
+bptest(VISTAS ~ USE2, data = datos)
+bptest(VISTAS ~ USE3, data = datos)
+bptest(VISTAS ~ PF, data = datos)
+bptest(VISTAS ~ EXP1, data = datos)
+bptest(VISTAS ~ EXP2, data = datos)
+bptest(VISTAS ~ EXP3, data = datos)
+
+View(datos)
+#datosCorregidos <- datos()/((datos$IM)^(1/2))
+
+#regCorregida <- lm (VISTAS ~. -ENJ1, data = datosCorregidos)
+#bptest(regCorregida)
+
+
+
 
 
